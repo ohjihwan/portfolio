@@ -52,3 +52,5 @@ button:focus {outline:1px solid var(--color-accent);}
 .bar__value {height:3px; background-color:var(--color-accent);}
 .tools__tools {padding:1rem;}
 .tools__etc {padding:1rem; background-color:var(--color-primary); filter:brightness(150%);}
+
+#work {}
