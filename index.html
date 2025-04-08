@@ -293,13 +293,13 @@
 <script>
 	const menuItems = document.querySelectorAll('.header__meun__item');
 
-menuItems.forEach(item => {
-  item.addEventListener('click', function() {
-    menuItems.forEach(otherItem => {
-      otherItem.classList.remove('-active');
-    });
-    this.classList.add('-active');
-  });
-});
+	menuItems.forEach(item => {
+		item.addEventListener('click', function() {
+			menuItems.forEach(otherItem => {
+				otherItem.classList.remove('-active');
+			});
+			this.classList.add('-active');
+		});
+	});
 </script>
 </html>
