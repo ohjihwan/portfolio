@@ -1,10 +1,23 @@
 @charset "UTF-8";
 
-@font-face {
-    font-family: 'NoonnuBasicGothicRegular';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noon-2410@1.0/NoonnuBasicGothicRegular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
+button:focus {outline:1px solid var(--color-accent);}
 
-body {font-family:'NoonnuBasicGothicRegular';}
+section {padding:4rem; text-align:center;}
+.max-container {max-width:var(--size-max-width); margin:0 auto;}
+
+.title {font-size:2.5rem; margin:1rem 0;}
+.description {font-size:1.5rem; margin:0.5rem 0;}
+
+/* header */
+.header {display:flex; justify-content:space-between; align-items:center; position:fixed; top:0; z-index:1; width:100%; padding:1rem; background-color:var(--color-primary);}
+.header__logo {display:flex; align-items:center; gap:8;}
+.header__logo__img {width:36px; height:36px;}
+.header__logo__title {font-size:1.8rem;}
+.header__nav {}
+.header__menu {display:flex; gap:4px;}
+.header__meun__item {padding:8px 16px;}
+.header__meun__item:hover {border-bottom:1px solid var(--color-accent);}
+.header__meun__item:active {outline:1px solid var(--color-accent); border-radius:4px;}
+.header__meun__item.-active {border-bottom:1px solid var(--color-accent);}
+
+.header a {color:var(--color-white);}

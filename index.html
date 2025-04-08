@@ -7,7 +7,7 @@
 	<meta name="author" content="오지환">
 	<!-- 소셜 미디어 공유용 메타 태그(Open Graph) -->
 	<meta property="og:title" content="오지환의 포트폴리오">
-	<meta property="og:type" content="website">
+	<meta property="og:type" content ="website">
 	<meta property="og:url" content="배포후 생성된 URL">
 	<meta property="og:image" content="배포후 생성된 이미지 URL">
 	<title>오지환&#39;s Portfolio</title>
@@ -16,22 +16,23 @@
 	<link rel="stylesheet" href="css/style.css">
 	<!-- Font Awesome -->
 	<script src="https://kit.fontawesome.com/b4f0357f99.js" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 	<!-- Header -->
-	<header>
-		<div>
-			<img src="images/prof1.ico" alt="logo">
-			<h1><a href="#home">EloD</a></h1>
+	<header class="header">
+		<div class="header__logo">
+			<img src="images/prof1.ico" class="header__logo__img" alt="프로필 이미지">
+			<h1 class="header__logo__title"><a href="#home">EloD</a></h1>
 		</div>
-		<nav>
-			<ul>
-				<li><a href="#home">홈으로</a></li>
-				<li><a href="#about">지환</a></li>
-				<li><a href="#skill">기술</a></li>
-				<li><a href="#work">포트폴리오</a></li>
-				<li><a href="#license">자격증</a></li>
-				<li><a href="#contact">연락처</a></li>
+		<nav class="header__nav">
+			<ul class="header__menu">
+				<li><a href="#home" class="header__meun__item -active">홈으로</a></li>
+				<li><a href="#about" class="header__meun__item">지환</a></li>
+				<li><a href="#skill" class="header__meun__item">기술</a></li>
+				<li><a href="#work" class="header__meun__item">포트폴리오</a></li>
+				<li><a href="#license" class="header__meun__item">자격증</a></li>
+				<li><a href="#contact" class="header__meun__item">연락처</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -289,4 +290,12 @@
 	</main>
 	<!-- // -->
 </body>
+<script>
+	$(function(){
+		$('.header__meun__item').on('click', function(){
+			$('.header__meun__item').removeClass('-active');
+			$(this).addClass('-active')
+		})
+	});
+</script>
 </html>
