@@ -51,7 +51,7 @@
 		 
 		<!-- about -->
 		<section id="about">
-			<h2>류지</h2>
+			<h2>지환</h2>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum omnis dolores quibusdam mollitia laborum voluptatem ipsam dicta sed nam, natus, reiciendis nulla labore maxime ad magnam aperiam alias fuga atque. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel exercitationem accusamus, error eius dignissimos mollitia cumque a tempore, at cupiditate perferendis molestiae amet inventore odit aperiam animi. Ullam, similique non.</p>
 			<ul>
 				<li>
@@ -291,11 +291,15 @@
 	<!-- // -->
 </body>
 <script>
-	$(function(){
-		$('.header__meun__item').on('click', function(){
-			$('.header__meun__item').removeClass('-active');
-			$(this).addClass('-active')
-		})
-	});
+	const menuItems = document.querySelectorAll('.header__meun__item');
+
+menuItems.forEach(item => {
+  item.addEventListener('click', function() {
+    menuItems.forEach(otherItem => {
+      otherItem.classList.remove('-active');
+    });
+    this.classList.add('-active');
+  });
+});
 </script>
 </html>
