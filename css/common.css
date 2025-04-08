@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+*, *:before, *:after {box-sizing:border-box;margin:0;padding:0;border:none;outline:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;}
+ul, ol, dl {list-style:none;}
+img {max-width:100%;vertical-align:top;}
+.img {width:100%;}
+a {color:inherit;text-decoration:none;}
+button {cursor:pointer;}
+input, textarea {user-select:auto;-webkit-user-select:auto;}
+
+.hide {overflow:hidden !important;position:absolute !important;width:1px !important;height:1px !important;margin:0 !important;padding:0 !important;border:0 !important;white-space:nowrap !important;clip:rect(1px, 1px, 1px, 1px) !important;clip-path:inset(50%) !important;}
