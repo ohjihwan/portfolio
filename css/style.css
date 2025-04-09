@@ -67,3 +67,13 @@ button:focus {outline:1px solid var(--color-accent);}
 .project__metadata {position:absolute; top:0; left:0; width:100%; height:100%; background-color:var(--color-black); opacity:0; display:flex; flex-direction:column; justify-content:center; align-items:center; transition:all .25s ease-in; transform:translateY(-10px);}
 .project__metadata:hover {opacity:0.8; transform:translateY(0);}
 .project__title::after {content:''; display:block; position:relative; left:50%; transform:translate(-50%); margin:0.5rem 0; width:50px; height:2px; background-color:var(--color-accent);}
+
+/* license */
+.licenses {margin:3rem;}
+.license {display:flex; gap:2rem; align-items:center; margin-bottom:2rem;}
+.license__img {width:150px; height:150px; border-radius:50%; box-shadow:0 3px 8px rgba(0,0,0,0.3);}
+.license__bubble {padding:1rem; border-radius:8px; box-shadow:0 3px 8px rgba(0,0,0,0.3);}
+.license__bubble__name {color:var(--color-accent); font-weight:bold; filter:brightness(70%);}
+
+/* arrow up */
+.arrow-up {background-color:var(--color-primary); position:fixed; bottom:3rem; right:3rem; font-size:3rem; width:4.5rem; height:4.5rem; border-radius:100%; text-align:center; box-shadow:5px 5px 0 0 var(--color-accent); color:var(--color-white)}
