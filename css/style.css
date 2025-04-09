@@ -77,3 +77,9 @@ button:focus {outline:1px solid var(--color-accent);}
 
 /* arrow up */
 .arrow-up {background-color:var(--color-primary); position:fixed; bottom:3rem; right:3rem; font-size:3rem; width:4.5rem; height:4.5rem; border-radius:100%; text-align:center; box-shadow:5px 5px 0 0 var(--color-accent); color:var(--color-white)}
+
+/* footer */
+#contact {background-color:var(--color-primary); color:var(--color-text);}
+.contact__links {display:flex; justify-content:center; gap:1rem; padding:1rem; font-size:2rem;}
+.contact__link {transition:color 0.25s ease-in;}
+.contact__link:hover {color:var(--color-accent);}
