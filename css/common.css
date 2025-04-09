@@ -30,9 +30,6 @@ input, textarea {user-select:auto;-webkit-user-select:auto;}
 	--color-blue:#03e8f9;
 	--color-orange:#fd6413;
 	--color-white:#fff;
-	
-	/* size */
-	--size-max-width:1200px;
 }
 
 body {font-family:'NoonnuBasicGothicRegular';}

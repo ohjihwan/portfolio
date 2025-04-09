@@ -37,6 +37,7 @@
 			<h1 class="header__logo__title"><a href="#home">EloD</a></h1>
 		</div>
 		<nav class="header__nav">
+			<button type="button" class="header__meun__button"><span class="hide">메뉴 열기</span></button>
 			<ul class="header__menu">
 				<li><a href="#home" class="header__meun__item -active">홈으로</a></li>
 				<li><a href="#about" class="header__meun__item">지환</a></li>
@@ -362,5 +363,27 @@
 			this.classList.add('-active');
 		});
 	});
+
+	function mediaTamp(){
+		if( $(window).width() <= 768 ){
+			$('.header__meun__button').show();
+			$('.header__nav').addClass('tamplet-change');
+		} else {
+			$('.header__meun__button').hide();
+			$('.header__nav').removeClass('tamplet-change');
+		}
+	}
+	$(document).on('click', '.tamplet-change', function(){
+		if ( !$(this).hasClass('-on') ) {
+			$('.header__nav').addClass('-on')
+		} else {
+			$('.header__nav').removeClass('-on')
+		}
+	}) 
+
+	mediaTamp()
+	$(window).resize(function(){
+		mediaTamp()
+	})
 </script>
 </html>
