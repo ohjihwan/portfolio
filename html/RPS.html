@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.btn-event, .result, .result-txt {font-size:100px;}
+		.result, .result-txt {display:inline-block}
+	</style>
+</head>
+<body>
+	<h2>가위바위보 게임</h2>
+	<div>
+	<button type="button" class="btn-event rock">✊</button>
+	<button type="button" class="btn-event paper">✋</button>
+	<button type="button" class="btn-event scissors">✌️</button>
+</div>
+
+	<div class="result"></div>
+	<div class="result-txt"></div>
+</body>
+<script>
+// 테스트 시작
+const buttons = document.querySelectorAll('.btn-event');
+const resultDiv = document.querySelector('.result');
+// 원하는 텍스트를 변수에 저장합니다.
+// const desiredText = '버튼을 클릭하여 텍스트가 변경되었습니다!';
+// 테스트 끝
+
+function comeOn(user) {
+	let comArray = ['rock', 'paper', 'scissors']
+	let testTxt = ''
+	let comAI = Math.floor( Math.random() * 3 );
+	switch (comArray[comAI]) {
+		case comArray[0] : 
+			if (user == "rock" && comArray[0]) {
+				testTxt = '비김'
+			} else if (user == "paper" && comArray[0]) {
+				testTxt = '이겼음'
+			} else if (user == "scissors" && comArray[0]) {
+				testTxt = '졌음'
+			}
+			resultDiv.textContent = '✊' +  testTxt// 테스트
+			break;
+		case comArray[1] : 
+			if (user == "rock" && comArray[1]) {
+				testTxt = '졌음'
+			} else if (user == "paper" && comArray[1]) {
+				testTxt = '비김'
+			} else if (user == "scissors" && comArray[1]) {
+				testTxt = '이겼음'
+			}
+			resultDiv.textContent = '✋' +  testTxt// 테스트
+			break;
+		case comArray[2] : 
+			if (user == "rock" && comArray[2]) {
+				testTxt = '이겼음'
+			} else if (user == "paper" && comArray[2]) {
+				testTxt = '졌음'
+			} else if (user == "scissors" && comArray[2]) {
+				testTxt = '비김'
+			}
+			resultDiv.textContent = '✌️' +  testTxt// 테스트
+			break;
+	}
+}
+
+// 테스트
+document.addEventListener('click', function(event) {
+	if (event.target.classList.contains('rock')) {
+		comeOn('rock')
+	}
+	if (event.target.classList.contains('paper')) {
+		comeOn('paper')
+	}
+	if (event.target.classList.contains('scissors')) {
+		comeOn('scissors')
+	}
+});
+</script>
+</html>

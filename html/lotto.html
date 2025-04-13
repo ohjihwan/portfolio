@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h2>로또 번호 6자리</h2>
+	<button type="button" class="btn-event">번호 뽑기</button>
+	<p></p>
+</body>
+<script>
+function lotto() {
+	const number6 = []
+	for (let i = 0; i < 6; i++) {
+		let number = Math.floor( Math.random() * 45 + 1)
+		if ( number6.includes(number) ) {
+			i--;
+		} else {
+			number6.push( number )
+		}
+	}
+	number6.join('')
+	number6.sort((a, b) => a - b)
+	
+	// 테스트
+	const paragraphElements = document.querySelectorAll('p');
+	paragraphElements.forEach(function(paragraph) {
+		paragraph.textContent = number6;
+	});
+}
+
+// 테스트
+document.addEventListener('click', function(event) {
+	if (event.target.classList.contains('btn-event')) {
+		lotto()
+	}
+});
+</script>
+</html>
