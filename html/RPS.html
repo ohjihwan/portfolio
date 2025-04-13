@@ -34,33 +34,21 @@ function comeOn(user) {
 	let comAI = Math.floor( Math.random() * 3 );
 	switch (comArray[comAI]) {
 		case comArray[0] : 
-			if (user == "rock" && comArray[0]) {
-				testTxt = '비김'
-			} else if (user == "paper" && comArray[0]) {
-				testTxt = '이겼음'
-			} else if (user == "scissors" && comArray[0]) {
-				testTxt = '졌음'
-			}
+			if (user == "rock" && comArray[0]) testTxt = 'Draw'
+			else if (user == "paper" && comArray[0]) testTxt = 'win'
+			else if (user == "scissors" && comArray[0]) testTxt = 'lose'
 			resultDiv.textContent = '✊' +  testTxt// 테스트
 			break;
 		case comArray[1] : 
-			if (user == "rock" && comArray[1]) {
-				testTxt = '졌음'
-			} else if (user == "paper" && comArray[1]) {
-				testTxt = '비김'
-			} else if (user == "scissors" && comArray[1]) {
-				testTxt = '이겼음'
-			}
+			if (user == "rock" && comArray[1]) testTxt = 'lose'
+			else if (user == "paper" && comArray[1]) testTxt = 'Draw'
+			else if (user == "scissors" && comArray[1]) testTxt = 'win'
 			resultDiv.textContent = '✋' +  testTxt// 테스트
 			break;
 		case comArray[2] : 
-			if (user == "rock" && comArray[2]) {
-				testTxt = '이겼음'
-			} else if (user == "paper" && comArray[2]) {
-				testTxt = '졌음'
-			} else if (user == "scissors" && comArray[2]) {
-				testTxt = '비김'
-			}
+			if (user == "rock" && comArray[2]) testTxt = 'win'
+			else if (user == "paper" && comArray[2]) testTxt = 'lose'
+			else if (user == "scissors" && comArray[2]) testTxt = 'Draw'
 			resultDiv.textContent = '✌️' +  testTxt// 테스트
 			break;
 	}
