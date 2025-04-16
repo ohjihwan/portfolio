@@ -1,3 +1,5 @@
+let checkSet = false;
+
 function sendit(){
 	const userid = document.getElementById('userid');
 	const userpw = document.getElementById('userpw');
@@ -10,7 +12,7 @@ function sendit(){
 	const expPwText = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 	const expNameText = /^[가-힣]+$/
 	const expHpText = /^\d{3}-\d{3,4}-\d{4}$/
-	const expEmailText = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]){4,30}$/;
+	const expEmailText = /^.+@.+\..+$/;
 
 	if(userid.value === '') {
 		alert('아이디를 입력해주세요');
@@ -48,25 +50,101 @@ function sendit(){
 		return false;
 	}
 
-	if(email.value === ''){
+	if(!expEmailText.test(email.value)){
 		alert('이메일형식이 맞지 않습니다')
 		email.focus();
 		return false;
 	}
 
-// 주민등록 번호
-// 생년월일 - 성별 - 시도번호 - 읍면동번호 - 접수순서 - 검증번호
-// xxxxxx  -  x   -   xx    -     xx    -    x     -   x
+	if (!checkSet) {
+		alert('주민등록번호를 확인해주세요.')
+		return false
+	}
+	
+	return true;
+}
 
 
-// 001011 - 3068518
+const ssnBtn = document.getElementById('ssnBtn')
+function isValidBirthDate(YY,MM,DD,sevenNum){
+	let year = parseInt(YY)
+	const month = parseInt(MM)
+	const day = parseInt(DD)
 
-// 1. 마지막 번호를 빼놓습니다
-// 2. 2,3,4,5,7,8,9,1,2,3,4,5를 각자리에 곱합니다.
-// 3. 각 자리에 결과를 모두 더합니다
-// 4. 결과에 11로 나누어 나머지 값을 구합니다.
-// 5. 11에서 나머지 값을 뺍니다. (단 검증숫자가 10 은 '0', 11 은 '1'로 간주)
-// 6. 주민등록번호의 검증숫자와 결과가 같으면 유효한 주민등록번호입니다.
+	if (sevenNum == 1 || sevenNum == 2 || sevenNum == 5 || sevenNum == 6) {
+        year += 1900;
+    } else if (sevenNum == 3 || sevenNum == 4 || sevenNum == 7 || sevenNum == 8) {
+        year += 2000;
+    } else {
+        year += 1800;
+    }
+
+	if ( month < 1 || month > 12 ) {
+		return false
+	}
+
+	const daysInMonth = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+	const leap = (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
+
+	if ( month === 2 && leap ) {
+		daysInMonth[2] = 29;
+	}
+
+	if (day < 1 || day > daysInMonth[month]) {
+		return false;
+	}
 
 	return true;
 }
+
+function checkSsn(ssn) {
+	const weights = [2,3,4,5,6,7,8,9,2,3,4,5];
+	let sum = 0;
+	for (let i = 0; i < 12; i++) {
+		sum += parseInt(ssn.charAt(i)) * weights[i];
+	}
+	let remainder = sum % 11;
+    let checkSsn = 11 - remainder;
+	console.log(checkSsn)
+    if (checkSsn >= 10) {
+        checkSsn %= 10;
+    }
+
+	return checkSsn;
+}
+
+ssnBtn.addEventListener('click', function(){
+	const ssnFirst = document.getElementById('ssn1').value
+	const ssnLast = document.getElementById('ssn2').value
+	const ssn = ssnFirst + ssnLast
+	const sevenNum = parseInt(ssnLast.charAt(0))
+
+	if ( ssn.length === 13 && /^\d+$/.test(ssn) ){
+		if ( ssnFirst.length == 6 ) {
+			let YY = ssnFirst.slice(0,2)
+			let MM = ssnFirst.slice(2,4)
+			let DD = ssnFirst.slice(4,6)
+			const sevenNum = parseInt(ssn.charAt(6));
+            const calculatedCheckSsn = checkSsn(ssn);
+            const inputCheckDigit = parseInt(ssn.charAt(12));
+			
+			if (!isValidBirthDate(YY, MM, DD, sevenNum)) {
+				alert('주민번호 앞 6자리가 틀렸습니다')
+				checkSet = false
+			} else if(calculatedCheckSsn !== inputCheckDigit) {
+				alert('주민번호 뒷 7자리가 틀렸습니다')
+				checkSet = false
+			} else {
+				alert('생년월일이 유효합니다.')
+				checkSet = true
+			}
+		} else {
+			alert('주민등록번호를 입력해주세요')
+			checkSet = false
+		}
+	} else {
+		alert('주민등록번호가 올바르지 않습니다')
+		checkSet = false
+	}
+})
