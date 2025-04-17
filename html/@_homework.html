@@ -7,10 +7,22 @@
 	<style>
 		*{padding:0; margin:0; box-sizing:border-box;}
 		ul, li, ol {list-style:none;}
+		h1,
+		h2,
+		.input-set,
+		#noteList {width:calc(100% - 20px); max-width:700px; margin:18px auto 0;}
+		#noteList .unit {display:flex; align-items:center; gap:4px; padding:8px 0; border-bottom:1px solid #e6e6e6;}
+		#noteList .unit input,
+		#noteList .unit p {flex:1;}
+		#noteList .unit input {height:28px;}
 		.input-set {position:relative; height:46px; border:1px solid #d3d3d3; border-radius:8px;;}
 		.input-set input {height:46px; width:100%; border:none; padding:0 76px 0 12px; background-color:transparent; font-size:20px; font-weight:bold; line-height:46px;}
 		.input-set input:focus {border:none; outline:none;}
 		.input-set button {width:55px; height:36px;  position:absolute; right:11px; top:50%; transform:translateY(-50%); background-color:#00ac47; border:none; border-radius:5px; color:#fff;}
+		#save,
+		#edit,
+		#del {width:55px; height:28px;}
+		.hidden {display:none;}
 	</style>
 </head>
 <body>
@@ -24,62 +36,154 @@
 	<ul id="noteList"></ul>
 </body>
 <script>
-	let db;
+    let db;
 
-	const request = indexedDB.open('MyPlanDB', 1)
+    const request = indexedDB.open('MyPlanDB', 1)
 
-	request.onupgradeneeded = function(e) {
-		db = e.target.result;
-		if(!db.objectStoreNames.contains('notes')) {
-			db.createObjectStore('notes', {keyPath: 'id1', autoIncrement: true});
+    request.onupgradeneeded = function(e) {
+        db = e.target.result;
+        if(!db.objectStoreNames.contains('notes')) {
+            db.createObjectStore('notes', {keyPath: 'id', autoIncrement: true});
+        }
+    }
+
+    request.onsuccess = function(e){
+        db = e.target.result;
+        displayNotes();
+    }
+
+    request.onerror = function(){
+        alert('IndexedDB 열기 실패');
+    }
+
+    function saveNote(){
+        const input = document.getElementById('noteInput');
+        const text = input.value.trim();
+        if (!text) return
+
+        const tx = db.transaction("notes", "readwrite");
+        const store = tx.objectStore('notes');
+        store.add({text:text, created: new Date()});
+
+        tx.oncomplete = function(){
+            input.value = "";
+            displayNotes();
+        }
+    }
+
+    function editNote(button) {
+        const listItem = button.parentNode;
+        const noteText = listItem.querySelector('p');
+        const editInput = listItem.querySelector('input[type="text"]');
+        const saveButton = listItem.querySelector('#save');
+        const editButton = listItem.querySelector('#edit');
+        const delButton = listItem.querySelector('#del');
+
+        noteText.classList.add('hidden');
+        editButton.classList.add('hidden');
+        delButton.classList.add('hidden');
+
+        editInput.classList.remove('hidden');
+        editInput.value = noteText.textContent;
+        saveButton.classList.remove('hidden');
+        saveButton.onclick = function() {
+            const newText = editInput.value.trim();
+            if (newText) {
+                const noteId = listItem.dataset.noteId;
+                updateNoteTextInUI(listItem, newText);
+                saveEditedNoteToDB(noteId, newText);
+            } else {
+                // 입력이 비어있으면 원래 상태로 되돌림
+                noteText.classList.remove('hidden');
+                editButton.classList.remove('hidden');
+                delButton.classList.remove('hidden');
+                editInput.classList.add('hidden');
+                saveButton.classList.add('hidden');
+            }
+        };
+    }
+
+    function updateNoteTextInUI(listItem, newText) {
+        const noteTextElement = listItem.querySelector('p');
+        const editInput = listItem.querySelector('input[type="text"]');
+        const saveButton = listItem.querySelector('#save');
+        const editButton = listItem.querySelector('#edit');
+        const delButton = listItem.querySelector('#del');
+
+        noteTextElement.textContent = newText;
+        noteTextElement.classList.remove('hidden');
+        editButton.classList.remove('hidden');
+        delButton.classList.remove('hidden');
+        editInput.classList.add('hidden');
+        saveButton.classList.add('hidden');
+    }
+
+    function saveEditedNoteToDB(noteId, newText) {
+        const tx = db.transaction("notes", "readwrite");
+        const store = tx.objectStore('notes');
+        const getRequest = store.get(parseInt(noteId));
+
+        getRequest.onsuccess = function() {
+            if (getRequest.result) {
+                const note = getRequest.result;
+                note.text = newText;
+                store.put(note);
+            }
+        };
+    }
+
+    function deleteNote(button) {
+        const listItem = button.parentNode;
+        const noteId = parseInt(listItem.dataset.noteId);
+
+        const tx = db.transaction("notes", "readwrite");
+        const store = tx.objectStore('notes');
+        store.delete(noteId);
+        listItem.remove();
+    }
+
+    function displayNotes(){
+        const list = document.getElementById('noteList');
+        list.innerHTML = '';
+
+        const tx = db.transaction('notes', 'readonly');
+        const store = tx.objectStore('notes')
+        const request = store.openCursor();
+
+        request.onsuccess = function(e){
+            const cursor = e.target.result;
+            if ( cursor ) {
+                const li = document.createElement('li');
+                li.classList.add('unit');
+                li.innerHTML = `
+                    <p>${cursor.value.text}</p>
+                    <input type="text" class="hidden">
+                    <button type="button" id="save" class="hidden">저장</button>
+                    <button type="button" id="edit">수정</button>
+                    <button type="button" id="del">삭제</button>
+                `;
+                li.dataset.noteId = cursor.key;
+
+                const editButton = li.querySelector('#edit');
+                const delButton = li.querySelector('#del');
+                editButton.addEventListener('click', function() {
+                    editNote(this);
+                });
+                delButton.addEventListener('click', function() {
+                    deleteNote(this);
+                });
+
+                list.appendChild(li);
+                cursor.continue();
+            }
+        }
+    }
+
+	const noteInput = document.getElementById('noteInput');
+	noteInput.addEventListener('keypress', function(event) {
+		if (event.key === 'Enter') {
+			saveNote();
 		}
-	}
-
-	request.onsuccess = function(e){
-		db = e.target.result;
-		displayNotes();
-	}
-
-	request.onerror = function(){
-		alert('IndexedDB 열기 실패');
-	}
-
-	function saveNote(){
-		const input = document.getElementById('noteInput');
-		const text = input.value.trim();
-		if (!text) return
-
-		const tx = db.transaction("notes", "readwrite");
-		const store = tx.objectStore('notes');
-		store.add({text:text, created: new Date()});
-
-		tx.oncomplete = function(){
-			input.value = "";
-			displayNotes();
-		}
-	}
-
-	function displayNotes(){
-		const list = document.getElementById('noteList');
-		list.innerHTML = '';
-
-		const tx = db.transaction('notes', 'readonly');
-		const store = tx.objectStore('notes')
-		const request = store.openCursor();
-
-		request.onsuccess = function(e){
-			const cursor = e.target.result;
-			if ( cursor ) {
-				const li = document.createElement('li')
-				li.classList.add('unit')
-				//li.textContent = `[${cursor.value.created.toLocaleString()}] ${cursor.value.text} test`
-				li.innerHTML = `
-					<span style="color:blue">${cursor.value.text}</span>
-				`
-				list.appendChild(li)
-				cursor.continue();
-			}
-		}
-	}
+	});
 </script>
 </html>
