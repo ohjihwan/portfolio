@@ -1,12 +1,29 @@
 let checkSet = false;
 
+window.onload = () => {
+	const ssn1 = document.getElementById('ssn1');
+	ssn1.addEventListener('keyup', () => {
+		if( ssn1.value.length >= 6 ) {
+			document.getElementById('ssn2').focus();
+		}
+	})
+
+	const ssnClass = document.querySelectorAll('.ssn')
+	ssnClass.array.forEach(function(){
+		s.addEventListener('input', () => {
+			document.getElementById('ssncheck').value = 'n'
+		})
+	})
+}
+
 function sendit(){
 	const userid = document.getElementById('userid');
 	const userpw = document.getElementById('userpw');
 	const userpw_re = document.getElementById('userpw_re');
 	const name = document.getElementById('name');
-	const hp = document.getElementById('hp')
-	const email = document.getElementById('email')
+	const hp = document.getElementById('hp');
+	const email = document.getElementById('email');
+	const ssncheck = document.getElementById('ssncheck');
 
 	const expIdText = /^[A-Za-z0-9]{4,20}$/;
 	const expPwText = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
@@ -53,6 +70,12 @@ function sendit(){
 	if(!expEmailText.test(email.value)){
 		alert('이메일형식이 맞지 않습니다')
 		email.focus();
+		return false;
+	}
+
+	if(ssncheck.value == 'n'){
+		alert('주민등록번호 검증 버튼을 눌러주세요.')
+		ssncheck.value = 'y'
 		return false;
 	}
 
@@ -136,8 +159,9 @@ ssnBtn.addEventListener('click', function(){
 				alert('주민번호 뒷 7자리가 틀렸습니다')
 				checkSet = false
 			} else {
-				alert('생년월일이 유효합니다.')
+				alert('이 주민등록번호는 유효합니다.')
 				checkSet = true
+				ssncheck = true
 			}
 		} else {
 			alert('주민등록번호를 입력해주세요')

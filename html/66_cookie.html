@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>쿠키</title>
+</head>
+<body>
+	<div id="popup" style="padding: 20px; background: #F0F0F0; border: 1px solid #ccc; width: 300px;">
+		<p><strong>[공지]</strong> 신규 강의가 업데이트 되었습니다!</p>
+		<label><input type="checkbox" id="hideToday" />오늘 하루 보지 않기</label>
+		<button onclick="closePopup()">닫기</button>
+	</div>
+<script>
+	// 쿠키 설정 함수
+	function setCookie(name, value, days) {
+		const d = new Date();
+		d.setTime(d.getTime() + days * 1000 * 60 * 60 * 24);
+		const expires = "expires=" + d.toUTCString();
+		// console.log(expires);
+		document.cookie = `${name}=${value}; ${expires}; path=/`;
+	}
+
+	// 쿠키 읽기 함수
+	function getCookie(name){
+		const decodedCookie = decodeURIComponent(document.cookie);
+		const cookies = decodedCookie.split("; ");
+		for (let cookie of cookies) {
+			const [key, value] = cookie.split('=');
+			if(key === name) return value;
+		}
+		return null
+	}
+
+	// 팝업 닫기
+	function closePopup() {
+		const checkbox = document.getElementById("hideToday");
+		if (checkbox.checked) {
+			setCookie("hidePopup", "true", 1);
+			//	 alert("팝업 체크박스 체크됨");
+		}
+		document.getElementById("popup").style.display = "none";
+	}
+
+	window.onload = function(){
+		if(getCookie('hidePopup') === 'true') {
+			document.getElementById('popup').style.display = 'none'
+		}
+	}
+</script>
+</body>
+</html>

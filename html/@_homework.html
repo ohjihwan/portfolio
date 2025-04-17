@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		*{padding:0; margin:0; box-sizing:border-box;}
+		ul, li, ol {list-style:none;}
+		.input-set {position:relative; height:46px; border:1px solid #d3d3d3; border-radius:8px;;}
+		.input-set input {height:46px; width:100%; border:none; padding:0 76px 0 12px; background-color:transparent; font-size:20px; font-weight:bold; line-height:46px;}
+		.input-set input:focus {border:none; outline:none;}
+		.input-set button {width:55px; height:36px;  position:absolute; right:11px; top:50%; transform:translateY(-50%); background-color:#00ac47; border:none; border-radius:5px; color:#fff;}
+	</style>
+</head>
+<body>
+	<h1>나의 할 일</h1>
+	<div class="input-set">
+		<input type="text" id="noteInput" placeholder="할일 메모 입력">
+		<button type="button" onclick="saveNote()">추가</button>
+	</div>
+
+	<h2>할 일 목록</h2>
+	<ul id="noteList"></ul>
+</body>
+<script>
+	let db;
+
+	const request = indexedDB.open('MyPlanDB', 1)
+
+	request.onupgradeneeded = function(e) {
+		db = e.target.result;
+		if(!db.objectStoreNames.contains('notes')) {
+			db.createObjectStore('notes', {keyPath: 'id1', autoIncrement: true});
+		}
+	}
+
+	request.onsuccess = function(e){
+		db = e.target.result;
+		displayNotes();
+	}
+
+	request.onerror = function(){
+		alert('IndexedDB 열기 실패');
+	}
+
+	function saveNote(){
+		const input = document.getElementById('noteInput');
+		const text = input.value.trim();
+		if (!text) return
+
+		const tx = db.transaction("notes", "readwrite");
+		const store = tx.objectStore('notes');
+		store.add({text:text, created: new Date()});
+
+		tx.oncomplete = function(){
+			input.value = "";
+			displayNotes();
+		}
+	}
+
+	function displayNotes(){
+		const list = document.getElementById('noteList');
+		list.innerHTML = '';
+
+		const tx = db.transaction('notes', 'readonly');
+		const store = tx.objectStore('notes')
+		const request = store.openCursor();
+
+		request.onsuccess = function(e){
+			const cursor = e.target.result;
+			if ( cursor ) {
+				const li = document.createElement('li')
+				li.classList.add('unit')
+				//li.textContent = `[${cursor.value.created.toLocaleString()}] ${cursor.value.text} test`
+				li.innerHTML = `
+					<span style="color:blue">${cursor.value.text}</span>
+				`
+				list.appendChild(li)
+				cursor.continue();
+			}
+		}
+	}
+</script>
+</html>

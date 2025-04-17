@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sessionStorage</title>
+</head>
+<body>
+	<h2>이 댑에서 방문한 횟수: <span id="counter">0</span>회</h2>
+</body>
+<script>
+	let count = sessionStorage.getItem('visitCount')
+	count = count ? Number(count) + 1 : 1;
+
+	sessionStorage.setItem('visitCount', count);
+
+	document.getElementById('counter').innerText = count;
+</script>
+</html>
