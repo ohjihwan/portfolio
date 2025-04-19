@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>초단기실황 조회 서비스</title>
-    <link rel="stylesheet" href="../css/weather.css">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>날씨 앱</title>
+	<link rel="stylesheet" href="../css/weather.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>초단기실황 조회 서비스</h1>
-        
-        <div class="form">
-            <label for="base_date">발표일자:</label>
-            <input type="text" id="base_date" value="20250419" placeholder="YYYYMMDD" required>
-            
-            <label for="base_time">발표시각:</label>
-            <input type="text" id="base_time" value="0600" placeholder="HHMM" required>
+	<h1>🌤️ 날씨 정보 확인하기</h1>
+	<div class="input-container">
+		<label for="base_date">기준 날짜:</label>
+        <input type="text" id="base_date" readonly>
+        <input type="hidden" id="base_date_hidden">
 
-            <label for="nx">X 좌표:</label>
-            <input type="number" id="nx" value="55" placeholder="X 좌표" required>
+		<label for="base_time">기준 시간:</label>
+		<select id="base_time">
+			<option value="0200">02:00</option>
+			<option value="0500">05:00</option>
+			<option value="0800">08:00</option>
+			<option value="1100">11:00</option>
+			<option value="1400">14:00</option>
+			<option value="1700">17:00</option>
+			<option value="2000">20:00</option>
+			<option value="2300">23:00</option>
+		</select>
 
-            <label for="ny">Y 좌표:</label>
-            <input type="number" id="ny" value="127" placeholder="Y 좌표" required>
+		<label for="nx">X:</label>
+		<input type="text" id="nx" />
 
-            <label for="num_of_rows">한 페이지 결과 수:</label>
-            <input type="number" id="num_of_rows" value="2" placeholder="결과 수" required>
+		<label for="ny">Y:</label>
+		<input type="text" id="ny" />
 
-            <button onclick="fetchData()">조회하기</button>
-        </div>
-        
-        <div id="result">
-            <h2>조회 결과</h2>
-            <ul id="responseData"></ul>
-            <div id="errorMessage" class="error-message"></div> <!-- 오류 메시지 영역 -->
-        </div>
-    </div>
+		<button onclick="fetchData()">날씨 조회</button>
+	</div>
 
-    <script src="../js/weather.js"></script>
+	<div id="result" style="display:none;">
+		<div id="errorMessage"></div>
+        <div id="skySummary" class="sky-summary"></div>
+		<ul id="responseData"></ul>
+	</div>
+
+	<script src="../js/weather.js"></script>
 </body>
 </html>
