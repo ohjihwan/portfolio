@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초단기실황 조회 서비스</title>
+    <link rel="stylesheet" href="../css/weather.css">
+</head>
+<body>
+    <div class="container">
+        <h1>초단기실황 조회 서비스</h1>
+        
+        <div class="form">
+            <label for="base_date">발표일자:</label>
+            <input type="text" id="base_date" value="20250419" placeholder="YYYYMMDD" required>
+            
+            <label for="base_time">발표시각:</label>
+            <input type="text" id="base_time" value="0600" placeholder="HHMM" required>
+
+            <label for="nx">X 좌표:</label>
+            <input type="number" id="nx" value="55" placeholder="X 좌표" required>
+
+            <label for="ny">Y 좌표:</label>
+            <input type="number" id="ny" value="127" placeholder="Y 좌표" required>
+
+            <label for="num_of_rows">한 페이지 결과 수:</label>
+            <input type="number" id="num_of_rows" value="2" placeholder="결과 수" required>
+
+            <button onclick="fetchData()">조회하기</button>
+        </div>
+        
+        <div id="result">
+            <h2>조회 결과</h2>
+            <ul id="responseData"></ul>
+            <div id="errorMessage" class="error-message"></div> <!-- 오류 메시지 영역 -->
+        </div>
+    </div>
+
+    <script src="../js/weather.js"></script>
+</body>
+</html>
