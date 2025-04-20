@@ -31,7 +31,10 @@
 		<label for="ny">Y:</label>
 		<input type="text" id="ny" />
 
-		<button onclick="fetchData()">날씨 조회</button>
+		<!-- 기준 날짜 입력 아래에 추가 -->
+		<div id="locationName" class="location-name">📍 위치 정보를 불러오는 중...</div>
+
+		<button type="button" id="fetchButton">날씨 조회</button>
 	</div>
 
 	<div id="errorMessage"></div>
@@ -40,6 +43,7 @@
 		<ul id="responseData" class="response-data"></ul>
 	</div>
 
-	<script src="../js/weather.js"></script>
 </body>
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=23feffcd12ca3e77f45255797254661f&libraries=services"></script>
+<script src="../js/weather.js"></script>
 </html>
