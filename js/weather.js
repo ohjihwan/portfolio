@@ -43,6 +43,7 @@ kakao.maps.load(() => {
 				const dongName = result.find(r => r.region_type === 'H');
 				if (dongName && locationElem) {
 					locationElem.textContent = `📍 현재 위치: ${dongName.address_name}`;
+					console.log(dongName.address_name)
 				} else if (locationElem) {
 					locationElem.textContent = '📍 위치 정보 확인 불가';
 				}
@@ -71,8 +72,8 @@ kakao.maps.load(() => {
 				error => {
 					console.warn("📌 위치 사용 거부됨, 기본 좌표로 대체");
 					// 예: 서울시청 위도경도
-					const fallbackLat = 37.5665;
-					const fallbackLon = 126.9780;
+					const fallbackLat = 37.50080;
+					const fallbackLon = 127.03692;
 					setLocation(fallbackLat, fallbackLon);
 				}
 			);
