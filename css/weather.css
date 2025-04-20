@@ -11,31 +11,15 @@ h1 {color:#4a90e2; text-align:center;}
 .input-container select {width:calc(100% - 10rem); padding:0.8rem; border:1px solid #ccc; border-radius:0.4rem;}
 .input-container button {flex:1; padding:1rem 1.5rem; border:none; border-radius:0.5rem; background-color:#4a90e2; color:#fff; cursor:pointer; transition:background-color 0.3s;}
 .input-container button:hover {background-color:#357ab7;}
-
-
 .location-name {
 	font-size: 1rem;
 	font-weight: bold;
 	margin-top: 10px;
 	color: #333;
 }
-
-
-
-
-
-
-
-
-
-
 #errorMessage {display:none; position:relative; margin-top:4rem; padding-top:10rem; font-size:2.4rem; font-weight:bold; text-align:center;}
 #errorMessage::before {content:'﹗'; display:flex; justify-content:center; align-items:center; position:absolute; top:0; left:50%; transform:translateX(-50%); width:8rem; height:8rem; border-radius:2.5rem; background-color:#d3d3d3;; font-size:8rem; color:#fff;}
-
-
-
 .sky-summary {max-width:60rem; margin:0 auto 1rem; font-size:1.2em; font-weight:bold;}
-
 .response-data {display:grid; grid-template-columns:repeat(auto-fill, minmax(20rem, 1fr)); gap:2rem; justify-content:center; max-width:80rem; margin:0 auto;}
 .response-data .data-list {position:relative; padding:2rem 1.2rem 2rem; border-radius:0.8rem; background-color:#fff; animation:showAnima 1s forwards;}
 @keyframes showAnima {
@@ -44,7 +28,6 @@ h1 {color:#4a90e2; text-align:center;}
 }
 
 .sky-info {position:absolute; top:0.5rem; right:1.2rem; font-size:5rem;}
-
 .sky-1 .sky-info::before {content:'☀️'} /* 맑음 */
 .sky-3 .sky-info::before {content:'⛅'} /* 구름 많음 */
 .sky-4 .sky-info::before {content:'☁️'} /* 흐림 */
