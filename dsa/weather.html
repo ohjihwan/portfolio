@@ -25,11 +25,13 @@
 			<option value="2300">23:00</option>
 		</select>
 
-		<label for="nx">X:</label>
-		<input type="text" id="nx" />
+		<div class="nx-ny">
+			<label for="nx">X:</label>
+			<input type="text" id="nx" />
 
-		<label for="ny">Y:</label>
-		<input type="text" id="ny" />
+			<label for="ny">Y:</label>
+			<input type="text" id="ny" />
+		</div>
 
 		<button onclick="fetchData()">날씨 조회</button>
 	</div>
@@ -37,11 +39,7 @@
 	<div id="errorMessage"></div>
 
 	<div id="result" style="display:none;">
-		<div class="region-and-summary">
-			<div id="region" class="region-name"></div>
-			<div id="skySummary" class="sky-summary"></div>
-		</div>
-
+		<div id="skySummary" class="sky-summary"></div>
 		<ul id="responseData" class="response-data"></ul>
 	</div>
 

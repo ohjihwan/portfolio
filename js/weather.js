@@ -144,50 +144,58 @@ function formatWeatherData(data, baseDate, baseTime) {
 	
 	const grouped = {};
 	data.forEach(item => {
-		if (!item.fcstTime) return; // fcstTime이 없으면 건너뛰기
+		if (!item.fcstTime) return;
 		if (!grouped[item.fcstTime]) grouped[item.fcstTime] = [];
 		grouped[item.fcstTime].push(item);
 	});
-	  
-	
-	// === ✅ 하늘 상태 추출 ===
-	let firstSky = null;
-	for (const time in grouped) {
-		const found = grouped[time].find(i => i.category === "SKY");
-		if (found) {
-		const emoji = skyEmojiMap[found.fcstValue] || "";
-		const description = skyMap[found.fcstValue] || found.fcstValue;
-		firstSky = `${emoji} 하늘 상태: ${description}`;
-		break;
+
+	// === ✅ 첫 번째 시간대 하늘 상태 요약 (PTY 우선) ===
+	let firstSummary = null;
+	const sortedTimes = Object.keys(grouped).sort(); // 시간순 정렬
+	if (sortedTimes.length > 0) {
+		const firstTime = sortedTimes[0];
+		const items = grouped[firstTime];
+
+		const ptyItem = items.find(i => i.category === "PTY");
+		const skyItem = items.find(i => i.category === "SKY");
+
+		const ptyValue = ptyItem?.fcstValue || "0";
+		const skyValue = skyItem?.fcstValue;
+
+		if (ptyValue !== "0") {
+			const ptyDesc = ptyMap[ptyValue] || ptyValue;
+			firstSummary = `🌧️️ 강수 상태: ${ptyDesc}`;
+		} else if (skyValue) {
+			const emoji = skyEmojiMap[skyValue] || "";
+			const skyDesc = skyMap[skyValue] || skyValue;
+			firstSummary = `${emoji} 하늘 상태: ${skyDesc}`;
 		}
 	}
-	
-	if (firstSky) {
+
+	if (firstSummary) {
 		const skyElem = document.getElementById('skySummary');
 		if (skyElem) {
-			skyElem.textContent = firstSky;
+			skyElem.textContent = firstSummary;
 		}
 	}
-	
-	const sortedTimes = Object.keys(grouped).sort(); // 시간순 정렬
+
+	// === ✅ 상세 예보 출력 ===
 	let result = "";
 	for (const time of sortedTimes) {
 		const items = grouped[time];
 		if (!items) continue;
-	
-		// SKY와 PTY 값 추출
+
 		const skyItem = items.find(item => item.category === "SKY");
 		const ptyItem = items.find(item => item.category === "PTY");
-	
+
 		const skyValue = skyItem?.fcstValue;
 		const ptyValue = ptyItem?.fcstValue;
-	
-		// 클래스 이름 만들기
+
 		const skyClass = skyValue ? `sky-${skyValue}` : '';
-		const ptyClass = ptyValue && ptyValue !== "0" ? `pty-${ptyValue}` : '';  // ⭐ 0인 경우 제외
-	
+		const ptyClass = ptyValue && ptyValue !== "0" ? `pty-${ptyValue}` : '';
+
 		const liClass = ['data-list', skyClass, ptyClass].filter(Boolean).join(' ');
-	
+
 		result += `<li class="${liClass}"><h3>${time.slice(0, 2)}:00</h3><span class="sky-info"></span><ul>`;
 		items.forEach(item => {
 			let value = item.fcstValue;
@@ -235,3 +243,9 @@ window.onload = function () {
 	getLocation();
 	setDefaultDateTime();
 };
+
+document.addEventListener("keyup", function (event) {
+	if (event.key === "Enter") {
+		fetchData();
+	}
+});
