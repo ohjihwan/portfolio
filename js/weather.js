@@ -36,19 +36,20 @@ kakao.maps.load(() => {
 	function getDongFromCoords(lat, lon) {
 		console.log('🛰️ 좌표로 동 이름 요청:', lat, lon);
 		var geocoder = new kakao.maps.services.Geocoder();
-
+	
 		geocoder.coord2RegionCode(lon, lat, function (result, status) {
 			const locationElem = document.getElementById('locationName');
-			if (status === kakao.maps.services.Status.OK) {
+			if (status === kakao.maps.services.Status.OK && result) {
 				const dongName = result.find(r => r.region_type === 'H');
 				if (dongName && locationElem) {
 					locationElem.textContent = `📍 현재 위치: ${dongName.address_name}`;
-					console.log(dongName.address_name)
+					console.log(dongName.address_name);
 				} else if (locationElem) {
 					locationElem.textContent = '📍 위치 정보 확인 불가';
 				}
-			} else if (locationElem) {
-				locationElem.textContent = '📍 위치 불러오기 실패';
+			} else {
+				console.error('❌ coord2RegionCode 실패:', status, result);
+				if (locationElem) locationElem.textContent = '📍 위치 불러오기 실패';
 			}
 		});
 	}
@@ -70,8 +71,7 @@ kakao.maps.load(() => {
 					setLocation(latitude, longitude);
 				},
 				error => {
-					console.warn("📌 위치 사용 거부됨, 기본 좌표로 대체");
-					// 예: 서울시청 위도경도
+					console.warn("📌 위치 사용 거부됨, 기본 좌표로 대체", error);
 					const fallbackLat = 37.50080;
 					const fallbackLon = 127.03692;
 					setLocation(fallbackLat, fallbackLon);
@@ -101,15 +101,15 @@ kakao.maps.load(() => {
 		fetch(url)
 			.then(response => response.json())
 			.then(data => {
-				if (!data.response || !data.response.body || !data.response.body.items) {
+				const items = data?.response?.body?.items?.item;
+				if (!items || !Array.isArray(items)) {
 					document.getElementById('errorMessage').textContent = "데이터가 없습니다.";
 					document.getElementById('errorMessage').style.display = 'block';
 					document.getElementById('responseData').innerHTML = "";
 					document.getElementById('result').style.display = 'none';
 					return;
 				}
-				const items = data.response.body.items.item;
-				const filtered = items.filter(item => item.fcstDate === baseDate);
+				const filtered = items.filter(item => `${item.fcstDate}` === baseDate);
 				const formatted = formatWeatherData(filtered, baseDate, baseTime);
 				document.getElementById('responseData').innerHTML = formatted;
 				document.getElementById('result').style.display = 'block';
@@ -163,8 +163,8 @@ kakao.maps.load(() => {
 			if (!items) continue;
 			const skyItem = items.find(item => item.category === "SKY");
 			const ptyItem = items.find(item => item.category === "PTY");
-			const skyValue = skyItem?.fcstValue;
-			const ptyValue = ptyItem?.fcstValue;
+			const skyValue = skyItem?.fcstValue ? String(skyItem.fcstValue) : '';
+			const ptyValue = ptyItem?.fcstValue ? String(ptyItem.fcstValue) : '';
 			const skyClass = skyValue ? `sky-${skyValue}` : '';
 			const ptyClass = ptyValue && ptyValue !== "0" ? `pty-${ptyValue}` : '';
 			const liClass = ['data-list', skyClass, ptyClass].filter(Boolean).join(' ');
