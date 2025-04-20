@@ -4,15 +4,13 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>날씨 앱</title>
-	<script defer src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=900a49de11acd39134e004f796126b30&libraries=services"></script>
-	<script src="../js/weather.js"></script>
 	<link rel="stylesheet" href="../css/weather.css" />
 </head>
 <body>
 	<h1>🌤️ 날씨 정보 확인하기</h1>
 	<div class="input-container">
 		<label for="base_date">기준 날짜:</label>
-        <input type="text" id="base_date" readonly>
+        <input type="text" id="base_date">
         <input type="hidden" id="base_date_hidden">
 
 		<label for="base_time">기준 시간:</label>
@@ -33,17 +31,20 @@
 		<label for="ny">Y:</label>
 		<input type="text" id="ny" />
 
-		<!-- 기준 날짜 입력 아래에 추가 -->
-		<div id="locationName" class="location-name">📍 위치 정보를 불러오는 중...</div>
-
-		<button type="button" id="fetchButton">날씨 조회</button>
+		<button onclick="fetchData()">날씨 조회</button>
 	</div>
-
+	
 	<div id="errorMessage"></div>
+
 	<div id="result" style="display:none;">
-        <div id="skySummary" class="sky-summary"></div>
+		<div class="region-and-summary">
+			<div id="region" class="region-name"></div>
+			<div id="skySummary" class="sky-summary"></div>
+		</div>
+
 		<ul id="responseData" class="response-data"></ul>
 	</div>
 
+	<script src="../js/weather.js"></script>
 </body>
 </html>
