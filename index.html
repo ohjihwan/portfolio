@@ -19,25 +19,21 @@
 	<!-- Font Awesome -->
 	<script src="https://kit.fontawesome.com/b4f0357f99.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script defer src="js/main.js"></script>
+	<script defer src="js/project.js"></script>
 </head>
 <body>
-	<!-- 
-		과제 안내
-		포트폴리오 페이지 재제작 및 GitHub Pages 배포하기
-		* 금일 작성한 포트폴리오 페이지를 재작성하여, 새로운 로컬 저장소에 저장하고 새로운 원격 저장소에 푸시하기
-		* CSS재작성
-		* GitHub Page의 링크를 과제 채널에 전달
-	-->
-
-
 	<!-- Header -->
 	<header class="header">
 		<div class="header__logo">
 			<img src="images/prof1.ico" class="header__logo__img" alt="프로필 이미지">
 			<h1 class="header__logo__title"><a href="#home">EloD</a></h1>
 		</div>
+		<button type="button" class="header__meun__button">
+			<i class="fa-solid fa-bars"></i>
+			<span class="hide">메뉴 열기</span>
+		</button>
 		<nav class="header__nav">
-			<button type="button" class="header__meun__button"><span class="hide">메뉴 열기</span></button>
 			<ul class="header__menu">
 				<li><a href="#home" class="header__meun__item -active">홈으로</a></li>
 				<li><a href="#about" class="header__meun__item">지환</a></li>
@@ -46,10 +42,10 @@
 				<li><a href="#license" class="header__meun__item">자격증</a></li>
 				<li><a href="#contact" class="header__meun__item">연락처</a></li>
 				<!-- 과제 -->
-				<li><a href="html/lotto.html" class="header__meun__item">로또</a></li>
+				<!-- <li><a href="html/lotto.html" class="header__meun__item">로또</a></li>
 				<li><a href="html/RPS.html" class="header__meun__item">가위바위보</a></li>
 				<li><a href="dsa/weather.html" class="header__meun__item">날씨</a></li>
-				<li><a href="html/todo.html" class="header__meun__item">할 일 목록</a></li>
+				<li><a href="html/todo.html" class="header__meun__item">할 일 목록</a></li> -->
 			</ul>
 		</nav>
 	</header>
@@ -59,10 +55,12 @@
 	<main>
 		<!-- home -->
 		<section id="home" class="section">
-			<img src="images/prof1.png" alt="나의 프로필" class="home__avatar">
-			<h2 class="home__title">안녕하세요.<br><strong class="home__title--string">오지환</strong> 입니다.</h2>
-			<p class="home__description">우주에서 가장 뛰어난 AI 개발자 오지환입니다!!</p>
-			<a href="#contact" class="home__contact">연락처</a>
+			<div class="home__container">
+				<img src="images/prof1.png" alt="나의 프로필" class="home__avatar">
+				<h2 class="home__title">안녕하세요.<br><strong class="home__title--string">오지환</strong> 입니다.</h2>
+				<p class="home__description">우주에서 가장 뛰어난 AI 개발자 오지환입니다!!</p>
+				<a href="#contact" class="home__contact">연락처</a>
+			</div>
 		</section>
 		<!-- // -->
 		 
@@ -190,95 +188,113 @@
 				<p class="description">Projects</p>
 				<ul class="categories">
 					<li>
-						<button type="button" class="category category--selected">
+						<button type="button" class="category category--selected" data-category="all">
 							ALL <span class="category__count">10</span>
 						</button>
 					</li>
 					<li>
-						<button type="button" class="category">
+						<button type="button" class="category" data-category="front-end">
 							Front-end <span class="category__count">3</span>
 						</button>
 					</li>
 					<li>
-						<button type="button" class="category">
+						<button type="button" class="category" data-category="mobile">
 							Mobile <span class="category__count">3</span>
 						</button>
 					</li>
 					<li>
-						<button type="button" class="category">
+						<button type="button" class="category" data-category="ai">
 							Ai <span class="category__count">4</span>
 						</button>
 					</li>
 				</ul>
 				<ul class="projects">
-					<li class="project">
+					<li class="project" data-type="front-end">
 						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
 							<img src="images/Tmap.jpg" alt="" class="project__img">
 							<div class="project__metadata">
-								<h3 class="project__title">Project #1</h3>
+								<h3 class="project__title">프론트엔드 #1</h3>
 								<p>티맵</p>
 							</div>
 						</a>
 					</li>
-					<li class="project">
+					<li class="project" data-type="front-end">
 						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
 							<img src="images/Tmap.jpg" alt="" class="project__img">
 							<div class="project__metadata">
-								<h3 class="project__title">Project #1</h3>
+								<h3 class="project__title">프론트엔드 #2</h3>
 								<p>티맵</p>
 							</div>
 						</a>
 					</li>
-					<li class="project">
+					<li class="project" data-type="front-end">
 						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
 							<img src="images/Tmap.jpg" alt="" class="project__img">
 							<div class="project__metadata">
-								<h3 class="project__title">Project #1</h3>
+								<h3 class="project__title">프론트엔드 #3</h3>
 								<p>티맵</p>
 							</div>
 						</a>
 					</li>
-					<li class="project">
+					<li class="project" data-type="mobile">
 						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
 							<img src="images/Tmap.jpg" alt="" class="project__img">
 							<div class="project__metadata">
-								<h3 class="project__title">Project #1</h3>
+								<h3 class="project__title">모바일 #4</h3>
 								<p>티맵</p>
 							</div>
 						</a>
 					</li>
-					<li class="project">
+					<li class="project" data-type="mobile">
 						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
 							<img src="images/Tmap.jpg" alt="" class="project__img">
 							<div class="project__metadata">
-								<h3 class="project__title">Project #1</h3>
+								<h3 class="project__title">모바일 #5</h3>
 								<p>티맵</p>
 							</div>
 						</a>
 					</li>
-					<li class="project">
+					<li class="project" data-type="mobile">
 						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
 							<img src="images/Tmap.jpg" alt="" class="project__img">
 							<div class="project__metadata">
-								<h3 class="project__title">Project #1</h3>
+								<h3 class="project__title">모바일 #6</h3>
 								<p>티맵</p>
 							</div>
 						</a>
 					</li>
-					<li class="project">
+					<li class="project" data-type="ai">
 						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
 							<img src="images/Tmap.jpg" alt="" class="project__img">
 							<div class="project__metadata">
-								<h3 class="project__title">Project #1</h3>
+								<h3 class="project__title">AI #7</h3>
 								<p>티맵</p>
 							</div>
 						</a>
 					</li>
-					<li class="project">
+					<li class="project" data-type="ai">
 						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
 							<img src="images/Tmap.jpg" alt="" class="project__img">
 							<div class="project__metadata">
-								<h3 class="project__title">Project #1</h3>
+								<h3 class="project__title">AI #8</h3>
+								<p>티맵</p>
+							</div>
+						</a>
+					</li>
+					<li class="project" data-type="ai">
+						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
+							<img src="images/Tmap.jpg" alt="" class="project__img">
+							<div class="project__metadata">
+								<h3 class="project__title">AI #9</h3>
+								<p>티맵</p>
+							</div>
+						</a>
+					</li>
+					<li class="project" data-type="ai">
+						<a href="#" target="_blank" title="새창 열림 클론코딩 사이트">
+							<img src="images/Tmap.jpg" alt="" class="project__img">
+							<div class="project__metadata">
+								<h3 class="project__title">AI #10</h3>
 								<p>티맵</p>
 							</div>
 						</a>
@@ -358,37 +374,6 @@
 	<!-- // -->
 </body>
 <script>
-	const menuItems = document.querySelectorAll('.header__meun__item');
-
-	menuItems.forEach(item => {
-		item.addEventListener('click', function() {
-			menuItems.forEach(otherItem => {
-				otherItem.classList.remove('-active');
-			});
-			this.classList.add('-active');
-		});
-	});
-
-	function mediaTamp(){
-		if( $(window).width() <= 768 ){
-			$('.header__meun__button').show();
-			$('.header__nav').addClass('tamplet-change');
-		} else {
-			$('.header__meun__button').hide();
-			$('.header__nav').removeClass('tamplet-change');
-		}
-	}
-	$(document).on('click', '.tamplet-change', function(){
-		if ( !$(this).hasClass('-on') ) {
-			$('.header__nav').addClass('-on')
-		} else {
-			$('.header__nav').removeClass('-on')
-		}
-	}) 
-
-	mediaTamp()
-	$(window).resize(function(){
-		mediaTamp()
-	})
+	
 </script>
 </html>
