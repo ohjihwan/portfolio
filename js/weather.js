@@ -62,7 +62,7 @@ function showError(error) {
 // 위치 정보 요청 및 설정 - Geolocation API 사용 | getCurrentPosition : 현재 위치를 1회 가져올 때 사용
 function getLocation() {
 	if (navigator.geolocation) {
-		navigator.geolocation.watchPosition(setLocation, showError);
+		navigator.geolocation.getCurrentPosition(setLocation, showError); // watchPosition -- setLocation showError 따로 구현해서 처리
 	} else {
 		alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
 	}
