@@ -13,14 +13,14 @@
 	--font-sans: "Pretendard Variable", Pretendard, system-ui, sans-serif;
 
 	/* 애니메이션 및 기타 토큰 */
-	--ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+	--ease-fluid: cubic-bezier(0.2, 0, 0, 1);
 }
 
 @layer base {
 	body {
 		@apply bg-background text-foreground antialiased font-sans selection:bg-white selection:text-black;
 		font-feature-settings: "cv11", "ss01", "tnum";
-		letter-spacing: -0.02em;
+		letter-spacing: -0.025em;
 		line-height: 1.6;
 	}
 }
@@ -33,13 +33,13 @@
 /* 기술적 감각을 보여주는 타이포그래피 설계 */
 .hero-title {
 	@include fluid-text(2.5rem, 6rem);
-	@apply font-bold tracking-tighter leading-[1.05] py-2;
+	@apply font-bold tracking-[calc(var(--spacing)*-0.05)] leading-[1.05] py-2;
 
 	.gradient-text {
 		@apply text-muted transition-all duration-700 ease-fluid;
 		
 		&:hover {
-			@apply text-foreground translate-x-2 inline-block;
+			@apply text-foreground translate-x-4 inline-block;
 		}
 	}
 }
@@ -47,7 +47,7 @@
 .tech-badge {
 	@apply px-4 py-1.5 text-[11px] uppercase tracking-widest font-semibold border border-border rounded-full bg-code-bg text-muted/80;
 	font-variant-numeric: tabular-nums;
-	transition: all 0.3s var(--ease-fluid);
+	transition: all 0.4s var(--ease-fluid);
 
 	&:hover {
 		@apply border-white text-white;

@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.scss";
 import React from "react";
 
-// axe-core 통합 (개발 모드에서만 실행)
-if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
-	const ReactDOM = require("react-dom");
-	const axe = require("@axe-core/react");
-	axe(React, ReactDOM, 1000);
-}
+/**
+ * 8년차 개발자의 포트폴리오 레이아웃
+ * - 시맨틱 마크업 준수 (header, main, footer)
+ * - Skip Navigation 적용 (A11y)
+ * - Noir 테마 및 성능 최적화 기반
+ */
 
 export const metadata: Metadata = {
 	title: "2027 Portfolio | UI/UX Engineer",
@@ -19,6 +19,15 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	// 클라이언트 사이드에서만 실행되는 접근성 테스트 (axe-core)
+	React.useEffect(() => {
+		if (process.env.NODE_ENV !== "production") {
+			const ReactDOM = require("react-dom");
+			const axe = require("@axe-core/react");
+			axe(React, ReactDOM, 1000);
+		}
+	}, []);
+
 	return (
 		<html lang="ko">
 			<body className="min-h-screen flex flex-col">
