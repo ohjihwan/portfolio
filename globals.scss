@@ -1,0 +1,33 @@
+@import "tailwindcss"; // Tailwind 4 엔진 임포트
+
+@theme {
+	/* Vercel Noir & Technical Gray (Technical Craftsman) */
+	--color-background: #000000;
+	--color-foreground: #ffffff;
+	--color-muted: #a1a1aa;
+	--color-border: #27272a;
+	--color-accent: #ffffff;
+	--color-code-bg: #111111;
+
+	/* 타이포그래피 최적화 */
+	--font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+
+	/* 애니메이션 및 기타 토큰 */
+	--ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+
+	/* 퍼블리셔의 믹스인 예시 (필요시 정의) */
+	@mixin flex-center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+@layer base {
+	body {
+		@apply bg-background text-foreground antialiased font-sans;
+		font-feature-settings: "cv11", "ss01", "tnum";
+		line-height: 1.6;
+		letter-spacing: -0.02em;
+	}
+}
