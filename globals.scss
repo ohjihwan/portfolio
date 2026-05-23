@@ -14,20 +14,36 @@
 
 	/* 애니메이션 및 기타 토큰 */
 	--ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+}
 
-	/* 퍼블리셔의 믹스인 예시 (필요시 정의) */
-	@mixin flex-center {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+/* 퍼블리셔의 내공이 담긴 유틸리티 믹스인 */
+@mixin responsive-text($min, $max) {
+	font-size: clamp($min, 5vw, $max);
 }
 
 @layer base {
 	body {
-		@apply bg-background text-foreground antialiased font-sans;
+		@apply bg-background text-foreground antialiased font-sans selection:bg-white selection:text-black;
 		font-feature-settings: "cv11", "ss01", "tnum";
-		line-height: 1.6;
 		letter-spacing: -0.02em;
+		line-height: 1.5;
 	}
+}
+
+/* 기술적 감각을 보여주는 타이포그래피 설계 */
+.hero-title {
+	@include responsive-text(2.5rem, 5rem);
+	@apply font-bold tracking-tighter leading-[1.1];
+
+	.gradient-text {
+		@apply text-muted transition-colors duration-500;
+		&:hover {
+			@apply text-foreground;
+		}
+	}
+}
+
+.tech-badge {
+	@apply px-3 py-1 text-xs font-medium border border-border rounded-full bg-code-bg text-muted;
+	font-variant-numeric: tabular-nums;
 }
