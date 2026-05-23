@@ -10,15 +10,10 @@
 	--color-code-bg: #111111;
 
 	/* 타이포그래피 최적화 */
-	--font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+	--font-sans: "Pretendard Variable", Pretendard, system-ui, sans-serif;
 
 	/* 애니메이션 및 기타 토큰 */
 	--ease-fluid: cubic-bezier(0.3, 0, 0, 1);
-}
-
-/* 퍼블리셔의 내공이 담긴 유틸리티 믹스인 */
-@mixin responsive-text($min, $max) {
-	font-size: clamp($min, 5vw, $max);
 }
 
 @layer base {
@@ -26,24 +21,35 @@
 		@apply bg-background text-foreground antialiased font-sans selection:bg-white selection:text-black;
 		font-feature-settings: "cv11", "ss01", "tnum";
 		letter-spacing: -0.02em;
-		line-height: 1.5;
+		line-height: 1.6;
 	}
+}
+
+/* 퍼블리셔의 내공이 담긴 유틸리티 믹스인 */
+@mixin fluid-text($min, $max) {
+	font-size: clamp($min, 8vw, $max);
 }
 
 /* 기술적 감각을 보여주는 타이포그래피 설계 */
 .hero-title {
-	@include responsive-text(2.5rem, 5rem);
-	@apply font-bold tracking-tighter leading-[1.1];
+	@include fluid-text(2.5rem, 6rem);
+	@apply font-bold tracking-tighter leading-[1.05] py-2;
 
 	.gradient-text {
-		@apply text-muted transition-colors duration-500;
+		@apply text-muted transition-all duration-700 ease-fluid;
+		
 		&:hover {
-			@apply text-foreground;
+			@apply text-foreground translate-x-2 inline-block;
 		}
 	}
 }
 
 .tech-badge {
-	@apply px-3 py-1 text-xs font-medium border border-border rounded-full bg-code-bg text-muted;
+	@apply px-4 py-1.5 text-[11px] uppercase tracking-widest font-semibold border border-border rounded-full bg-code-bg text-muted/80;
 	font-variant-numeric: tabular-nums;
+	transition: all 0.3s var(--ease-fluid);
+
+	&:hover {
+		@apply border-white text-white;
+	}
 }
