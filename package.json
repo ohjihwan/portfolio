@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev:next": "next dev",
+    "dev:css": "npx @tailwindcss/cli -i app/globals.css -o out/globals.css --watch",
+    "dev": "concurrently \"npm run dev:next\" \"npm run dev:css\"",
     "build": "next build",
     "postbuild": "npx @tailwindcss/cli -i app/globals.css -o out/globals.css",
     "start": "next start",
@@ -19,6 +21,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "tailwindcss": "^4",

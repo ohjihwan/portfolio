@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../out/globals.css";
-// 💡 src가 없으므로 현재 위치 기준으로 경로를 불러옵니다.
+import "./globals.css";
 import Header from "../components/Header";
 
 const geistSans = Geist({
